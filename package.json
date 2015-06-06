@@ -1,0 +1,20 @@
+{
+  "name": "livepix",
+  "version": "0.0.0",
+  "description": "Livepix, systeme de diffusion d'evenement en ligne",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test.js",
+    "start": "bin/www"
+  },
+  "author": "",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "express": "~4.12.4",
+    "chokidar": "~1.0.3"
+  },
+  "devDependencies": {
+    "supertest": "~1.0.1",
+    "mocha": "~2.2.5"
+  }
+}
