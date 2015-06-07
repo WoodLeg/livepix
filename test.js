@@ -21,3 +21,15 @@ describe('Request on the root path', function() {
     });
 
 });
+
+describe('Request on any other path', function() {
+
+    it('Returns a 301 redirect status code', function(done) {
+    
+        request(app)
+            .get('/lol')
+            .expect(302, done)
+
+    });
+
+});

@@ -5,16 +5,19 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha test.js",
-    "start": "bin/www"
+    "start": "node app.js"
   },
   "author": "",
   "license": "BSD-2-Clause",
   "dependencies": {
     "express": "~4.12.4",
-    "chokidar": "~1.0.3"
+    "chokidar": "~1.0.3",
+    "socket.io": "~1.3.5"
   },
   "devDependencies": {
     "supertest": "~1.0.1",
-    "mocha": "~2.2.5"
+    "mocha": "~2.2.5",
+    "morgan": "~1.5.3",
+    "fs": "0.0.2"
   }
 }
