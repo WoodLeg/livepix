@@ -1,8 +1,13 @@
 var express = require('express');
 var app = express();
 var fs = require('fs');
+var bodyParser = require('body-parser');
+
 
 app.use(express.static('public/'));
+
+var urlencodedParser = bodyParser.urlencoded({ extended: false});
+
 
 app.get('/gallery', function(request, response) {
    
@@ -12,6 +17,12 @@ app.get('/gallery', function(request, response) {
         response.json(data);
     });
    
+});
+
+app.get('/gallery/:id', urlencodedParser, function(request, response){
+    
+    console.log(req.body);
+
 });
 
 
