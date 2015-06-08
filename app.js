@@ -14,15 +14,10 @@ app.get('/gallery', function(request, response) {
     console.log('New Request');
     fs.readdir('public/img/', function(err, data){
         if (err) throw response.send(err);
+        //console.log(JSON.stringify(data));
         response.json(data);
     });
    
-});
-
-app.get('/gallery/:id', urlencodedParser, function(request, response){
-    
-    console.log(req.body);
-
 });
 
 

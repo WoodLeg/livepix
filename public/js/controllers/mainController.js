@@ -1,20 +1,22 @@
 angular.module('livepixApp')
 
 
-.controller('mainController', ['$scope','$http',
-    function($scope, $http){
+.controller('mainController', ['$scope','$http', 'picture',
+    function($scope, $http, picture){
 
-        $scope.title = "Hello Angular";
+        $scope.title = "Livepix App";
         $scope.gallery = [];
+        
+        $scope.gallery = picture.query();
 
         setInterval(function(){
-            $http.get('/gallery').success(function(data) {
-                console.log('done');
-                $scope.gallery = data;
+            $http({method: 'GET', url:'/gallery'}).success(function(data, status, headers, statusText) {
+                console.log('request send');
+                $scope.gallery = data; 
             }).error(function(data, status){
                 throw status;
-            });
-        }, 5000);  
+          });
+        }, 15000);  
     
 
 }]);
