@@ -2,16 +2,16 @@ var express = require('express');
 var app = express();
 var fs = require('fs');
 var bodyParser = require('body-parser');
-
+var morgan = require('morgan');
 
 app.use(express.static('public/'));
+app.use(morgan('dev'));
 
 var urlencodedParser = bodyParser.urlencoded({ extended: false});
 
 
 app.get('/gallery', function(request, response) {
    
-    console.log('New Request');
     fs.readdir('public/img/', function(err, data){
         if (err) throw response.send(err);
         //console.log(JSON.stringify(data));

@@ -11,12 +11,12 @@ angular.module('livepixApp')
 
         setInterval(function(){
             $http({method: 'GET', url:'/gallery'}).success(function(data, status, headers, statusText) {
-                console.log('request send');
+                console.log(status);
                 $scope.gallery = data; 
             }).error(function(data, status){
                 throw status;
           });
-        }, 15000);  
+        }, 1000);  
     
 
 }]);
