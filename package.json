@@ -10,11 +10,5 @@
   "author": "",
   "license": "BSD-2-Clause",
   "dependencies": {
-    "express": "~4.12.4",
-    "fs": "0.0.2",
-    "body-parser": "~1.12.4"
-  },
-  "devDependencies": {
-    "morgan": "~1.5.3"
   }
 }

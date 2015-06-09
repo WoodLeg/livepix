@@ -1,26 +1,6 @@
+var socketjs = require('sockjs');
 var express = require('express');
 var app = express();
+var io = sockjs.createServer({});
+var chokidar = require('chokidar');
 var fs = require('fs');
-var bodyParser = require('body-parser');
-var morgan = require('morgan');
-
-app.use(express.static('public/'));
-app.use(morgan('dev'));
-
-var urlencodedParser = bodyParser.urlencoded({ extended: false});
-
-
-app.get('/gallery', function(request, response) {
-   
-    fs.readdir('public/img/', function(err, data){
-        if (err) throw response.send(err);
-        //console.log(JSON.stringify(data));
-        response.json(data);
-    });
-   
-});
-
-
-app.listen(3000, function() {
-    console.log('Listening on port 3000');
-});
