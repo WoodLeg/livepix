@@ -10,5 +10,9 @@
   "author": "",
   "license": "BSD-2-Clause",
   "dependencies": {
+    "sockjs": "~0.3.15",
+    "fs": "0.0.2",
+    "chokidar": "~1.0.3",
+    "express": "~4.12.4"
   }
 }

@@ -1,4 +1,4 @@
-var socketjs = require('sockjs');
+var sockjs = require('sockjs');
 var express = require('express');
 var app = express();
 var io = sockjs.createServer({});
