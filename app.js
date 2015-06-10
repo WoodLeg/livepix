@@ -17,17 +17,29 @@ io.on('connection', function(client) {
     client.write('Server: Connection established...');
 
     
-    client.on('data', function(msg){
-        console.log('Receiving data from: ' + client_ip );
-        console.log(msg);
+    fs.readdir('gallery', function(err, files) {
+        if(!err){
+            var filesInit = files.filter(function(filename){
+                return !(filename.match(/^\./));
+            });
+            console.log('Init files in gallery: ' + filesInit);
+        }
+
     });
 
+
+
+
+
+
+ // FIN DE LA CONNEXION -- AUCUNE RECEPTION DU CLIENT
+    client.on('data', function(msg){});
     client.on('close', function() {
         console.log('Closing connection with ' + client_ip + ' on '+ client_port); 
     });
 });
 
-
+// Initialisation de la route pour le server SockJS
 io.installHandlers(server,{prefix: '/link'});
 
 app.use(express.static(__dirname + '/public'));
