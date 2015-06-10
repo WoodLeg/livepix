@@ -17,7 +17,7 @@
     <script src="js/vendor/sockjs.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/vendor/angular/angular.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/vendor/angular-route/angular-route.js" type="text/javascript" charset="utf-8"></script>
-
+    <script src="js/vendor/angular-sockjs/socket.js" type="text/javascript" charset="utf-8"></script>
 
     <!-- Angular APP -->
         <!-- app -->
@@ -26,25 +26,8 @@
         <!-- controllers -->
         <script src="js/controllers/mainController.js" type="text/javascript" charset="utf-8"></script>
         
-
-    <!-- SockJS Script -->
-    <script type="text/javascript" charset="utf-8">
-    
-    var sock = new SockJS('http://localhost:8000/link');
-
-    sock.onopen = function() {
-        console.log('Demand for connection...');
-    };
-
-    sock.onmessage = function(pack) {
-        console.log(pack.data);
-    };
-
-    sock.onclose = function(msg){
-        console.log('Connection to server failed' || msg);
-    };
-
-    </script>
+        <!-- services -->
+        <script src="js/services/socket.js" type="text/javascript" charset="utf-8"></script>
 
 </head>
 </html>
