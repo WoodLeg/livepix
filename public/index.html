@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"0>
+
+    <title>Livepix</title>
+
+<body>
+    
+</body>
+    
+    <script src="js/vendor/sockjs.min.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" charset="utf-8">
+    
+    var sock = new SockJS('http://localhost:8000/link');
+
+    sock.onopen = function() {
+        console.log('Demand for connection...');
+    };
+
+    sock.onmessage = function(pack) {
+        console.log(pack.data);
+    };
+
+    </script>
+
+</head>
+</html>
