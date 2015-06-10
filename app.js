@@ -22,7 +22,9 @@ io.on('connection', function(client) {
             var filesInit = files.filter(function(filename){
                 return !(filename.match(/^\./));
             });
-            console.log('Init files in gallery: ' + filesInit);
+            filesInit.forEach(function(filename){
+                client.write(JSON.stringify({ type: 'add', path: '/gallery/' + filename }));
+            });
         }
 
     });
@@ -36,6 +38,7 @@ io.on('connection', function(client) {
     client.on('data', function(msg){});
     client.on('close', function() {
         console.log('Closing connection with ' + client_ip + ' on '+ client_port); 
+        console.log('--------------------------------------');
     });
 });
 

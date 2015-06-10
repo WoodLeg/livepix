@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html ng-app="livepixApp">
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"0>
 
@@ -8,8 +8,26 @@
 <body>
     
 </body>
-    
+   
+   <div ng-view>
+       
+   </div>
+
+    <script src="js/vendor/jquery.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/vendor/sockjs.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/vendor/angular/angular.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/vendor/angular-route/angular-route.js" type="text/javascript" charset="utf-8"></script>
+
+
+    <!-- Angular APP -->
+        <!-- app -->
+        <script src="js/app.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- controllers -->
+        <script src="js/controllers/mainController.js" type="text/javascript" charset="utf-8"></script>
+        
+
+    <!-- SockJS Script -->
     <script type="text/javascript" charset="utf-8">
     
     var sock = new SockJS('http://localhost:8000/link');
