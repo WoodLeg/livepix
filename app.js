@@ -42,7 +42,7 @@ io.on('connection', function(client) {
 
 
  // FIN DE LA CONNEXION -- AUCUNE RECEPTION DU CLIENT
-    client.on('data', function(msg){});
+    client.on('data', function(msg){ });
     client.on('close', function() {
         console.log('Closing connection with ' + client_ip + ' on '+ client_port); 
         console.log('--------------------------------------');
