@@ -5,7 +5,6 @@ angular.module('livepixApp')
     
         $scope.title = "Hello Angular";
         $scope.gallery = [];
-    
 
         mySocket.setHandler('open', function(){
             console.log('Demand for connection...');
