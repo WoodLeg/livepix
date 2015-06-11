@@ -14,8 +14,7 @@ io.on('connection', function(client) {
     var client_ip = client.address.address;
     var client_port = client.address.port;
     console.log('New connection from: '+ client_ip + ' on ' + client_port);
-    client.write('Server: Connection established...');
-
+    client.write(JSON.stringify({message: "Connection to Server established"}));
     
     fs.readdir('gallery', function(err, files) {
         if(!err){
@@ -47,6 +46,7 @@ io.installHandlers(server,{prefix: '/link'});
 
 app.use(express.static(__dirname + '/public'));
 
+app.use('/gallery', express.static(__dirname + '/gallery'));
 
 var port = 8000;
 server.listen(port, function(){
