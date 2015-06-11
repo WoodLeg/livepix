@@ -15,7 +15,13 @@ angular.module('livepixApp')
             var newPic = JSON.parse(pack.data);
 
             if (newPic.type === "add") {
+                console.log('Nouvelle photo ajoutée');
                 $scope.gallery.push(newPic.path);
+            }
+
+            if (newPic.type === "unlink") {
+                console.log('La photo ' + newPic.path + ' a été supprimée');
+                $scope.gallery.splice($.inArray(newPic.path,$scope.gallery),1);
             }
         });
 

@@ -15,7 +15,19 @@ io.on('connection', function(client) {
     var client_port = client.address.port;
     console.log('New connection from: '+ client_ip + ' on ' + client_port);
     client.write(JSON.stringify({message: "Connection to Server established"}));
-    
+
+
+    var eventList = ['add','addDir','change','unlink','unlinkDir'];
+    eventList.forEach(function(event){
+        watcher.on(event, function(path){
+            setTimeout(function(){
+                console.log('Evenement: ' + event +', path ' + path);
+                client.write(JSON.stringify({type: event, path: '/' + path }));
+            },500);
+        });
+    });
+
+
     fs.readdir('gallery', function(err, files) {
         if(!err){
             var filesInit = files.filter(function(filename){
@@ -27,7 +39,6 @@ io.on('connection', function(client) {
         }
 
     });
-
 
 
 
