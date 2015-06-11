@@ -2,3 +2,4 @@ node_modules
 *.swp
 public/*.log
 gallery/*.jpg
+thumbs/
