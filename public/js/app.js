@@ -1,4 +1,4 @@
-app = angular.module('livepixApp', ['ngRoute','bd.sockjs']);
+app = angular.module('livepixApp', ['ngRoute','bd.sockjs','ngMaterial']);
 
 
 app.config(function($routeProvider) {

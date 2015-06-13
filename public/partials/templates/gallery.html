@@ -1,7 +1,6 @@
-<ul style="list-style: none">
-    <li style="float:right; margin-left: 10px;" ng-repeat="img in gallery">
-       <a ng-href="#{{ img }}"> 
-            <img ng-src="../thumbs{{ img }}" / width="200" height="120">
-        </a>
-    </li>
-</ul>
+<md-grid-list md-cols-sm="1" md-cols-md="2" md-cols-gt-md="5" md-row-height-gt-md="1:1" md-row-height="4:3" md-gutter="8px" md-gutter-gt-sm="20px">
+    <md-grid-tile ng-repeat="img in gallery"md-colspan="1" md-rowspan="1">
+        <img ng-src="../thumbs{{ img }}" />
+        <md-grid-tile-footer><h3>{{ img }}</h3></md-grid-tile-footer>
+    </md-grid-tile>
+  </md-grid-list>
