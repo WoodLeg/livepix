@@ -1,6 +1,6 @@
-<md-grid-list md-cols-sm="1" md-cols-md="2" md-cols-gt-md="5" md-row-height-gt-md="1:1" md-row-height="4:3" md-gutter="8px" md-gutter-gt-sm="20px">
-    <md-grid-tile ng-repeat="img in gallery"md-colspan="1" md-rowspan="1">
+<md-grid-list md-cols-sm="1" md-cols-md="2" md-cols-gt-md="4" md-row-height="16:9" md-gutter="8px" md-gutter-gt-sm="30px">
+    <md-grid-tile class="pics" ng-repeat="img in gallery"md-colspan="1" md-rowspan="1">
         <img ng-src="../thumbs{{ img }}" />
-        <md-grid-tile-footer><h3>{{ img }}</h3></md-grid-tile-footer>
+        <md-grid-tile-footer><a ng-href="#{{img}}"><h3>{{ img }}</h3></a></md-grid-tile-footer>
     </md-grid-tile>
   </md-grid-list>

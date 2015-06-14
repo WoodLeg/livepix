@@ -71,8 +71,8 @@ app.get('/thumbs/gallery/*', function(request, response) {
             require('imagemagick').crop({
                 srcPath: src_path,
                 dstPath: dist_path,
-                width: 314,
-                height:218
+                width: 500,
+                height:281
             }, function(err, stdout, stderr){
                 if (!err){response.sendFile(dist_path);}
             });

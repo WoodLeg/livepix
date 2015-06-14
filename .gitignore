@@ -1,6 +1,6 @@
 node_modules
 *.swp
 public/*.log
-gallery/*.jpg
+gallery/*
 thumbs/
 public/js/vendor/

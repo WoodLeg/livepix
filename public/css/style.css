@@ -1,4 +1,33 @@
+body{
+    background: black;
+    color:white;
+}
+
+.pics{
+    border: 5px solid white;
+}
+
 img{
     width: 100%;
-    height: 75%;
+    height: 100%;
+}
+
+md-grid-tile{
+    transition: all 300ms ease-out 50ms;
+}
+
+a{
+    color:white;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #FFFF00;
+}
+
+md-card{
+    color: #3C3C3C;
+}
+md-dialog{
+    color: #3C3C3C;
 }

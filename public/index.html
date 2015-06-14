@@ -1,16 +1,17 @@
 <!DOCTYPE HTML>
-<html ng-app="livepixApp">
+<html ng-app="livepixApp" layout="column">
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"0>
 
     <title>Livepix</title>
-    <link rel="stylesheet" href="./css/style.css" type="text/css" media="screen" charset="utf-8"0>
     <link rel="stylesheet" href="./js/vendor/angular-material/angular-material.min.css" type="text/css" media="screen" charset="utf-8"0>
+    <link rel="stylesheet" href="./css/style.css" type="text/css" media="screen" charset="utf-8"0>
+
 </head>
-<body layout="column" layout-margin layout-padding>
+<body flex>
     
    
-   <div ng-view>
+   <div ng-view layout-padding layout-margin>
        
    </div>
 
@@ -19,7 +20,6 @@
     <script src="js/vendor/angular/angular.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/vendor/angular-route/angular-route.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/vendor/angular-sockjs/socket.js" type="text/javascript" charset="utf-8"></script>
-    
     <script src="js/vendor/angular-animate/angular-animate.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/vendor/angular-aria/angular-aria.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/vendor/angular-material/angular-material.js" type="text/javascript" charset="utf-8"></script>

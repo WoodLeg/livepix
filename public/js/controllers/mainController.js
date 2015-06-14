@@ -3,7 +3,7 @@ angular.module('livepixApp')
 .controller('mainController',['$scope','mySocket','gallery',
     function($scope, mySocket, gallery){
     
-        $scope.title = "Hello Angular";
+        $scope.title = "Livepix";
         $scope.gallery = gallery.gallery;
 
         mySocket.setHandler('open', function(){
