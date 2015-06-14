@@ -3,4 +3,5 @@ node_modules
 public/*.log
 gallery/*
 thumbs/
-public/js/vendor/
+
+tmp/
