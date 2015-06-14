@@ -1,0 +1,22 @@
+
+
+
+<md-dialog aria-label="Mail" flex="30">
+    <md-dialog-content>
+        <p> Enter your e-mail </p>
+        <form name="emailForm">    
+            <md-input-container>
+                <label>E-mail</label>
+                <input type="mail" ng-model="emailForm.mail" required="emailForm.up">
+            </md-input-container>
+            <div class="md-actions" layout-align="end center">
+                <md-button ng-disabled="!emailForm.mail" ng-click="send(emailForm.mail)" class="md-primary">Send</md-button>
+                <md-button ng-click="closeDialog()" class="md-primary">Close</md-button>
+            </div>
+        </form>
+    </md-dialog-content>
+</md-dialog>
+
+
+
+

@@ -4,17 +4,15 @@ angular.module('livepixApp')
 .controller('picController', ['$scope','$routeParams', '$mdDialog',
     function($scope, $routeParams, $mdDialog) {
     
-    var src = '/gallery/'+ $routeParams.id;
-    $scope.src = src;
+    $scope.src = '/gallery/'+ $routeParams.id;
 
     $scope.printIt = function($event) {
         var par = angular.element(document.body);
-        
         $mdDialog.show({
             parent: par,
             targetEvent: $event,
             template:
-                '<md-dialog aria-label="Test">' + 
+                '<md-dialog aria-label="Print">' + 
                 '   <md-dialog-content>' + 
                 '       <p> Printing {{ picName }} </p> ' +
                 '   </md-dialog-content>' +
@@ -31,13 +29,26 @@ angular.module('livepixApp')
             $scope.closeDialog = function() {
                 $mdDialog.hide();
             }
-        }
-
-
-       
+        } 
     };
 
-    $scope.mailIt = function() {
-        alert('Mailing ' + $scope.src);
+    $scope.mailIt = function($event) {
+        var par = angular.element(document.body);
+        $mdDialog.show({
+            parent: par,
+            targetEvent: $event,
+            templateUrl: 'partials/templates/mailDialogForm.html',
+            controller: DialogController
+        });
+        function DialogController($scope, $mdDialog, $routeParams){ 
+            $scope.picName = $routeParams.id;
+            $scope.closeDialog = function() {
+                $mdDialog.hide();
+            }
+            $scope.send = function(mail) {
+                alert("Photo envoyé à " + mail);
+                $mdDialog.hide();
+            }
+        } 
     };
 }]);

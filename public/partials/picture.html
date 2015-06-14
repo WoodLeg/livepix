@@ -1,15 +1,15 @@
 <h1 id="picture">Hello Angular Picture</h1>
 
 
-<md-card>
-    <img ng-src="{{ src }}" class="md-card-image" alt="image caption">
-    <md-card-content>
-        <h2> {{ src }}</h2>
-        <p>{{ src }}</p>
-    </md-card-content>
-    <div class="md-actions" layout="row" layout-align="end center">
-        <md-button ng-click="printIt()" >Print it !</md-button>
-        <md-button ng-click="mailIt()">Mail it !</md-button>
-    </div>
-</md-card>
+<div layout="row" layout-align="center center">
 
+    <md-card flex="75">
+            <img ng-src="{{ src }}" class="md-card-image" alt="image caption">
+        <div class="md-actions" layout="row" layout-align="end center">
+            <md-button ng-click="printIt($event)" >Print it !</md-button>
+            <md-button ng-click="mailIt($event)">Mail it !</md-button>
+        </div>
+    </md-card>
+
+
+</div>
