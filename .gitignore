@@ -5,3 +5,5 @@ gallery/*
 thumbs/
 
 tmp/
+filters/*/*.jpg
+filters/*/*.jpeg

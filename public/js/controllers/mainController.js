@@ -15,7 +15,7 @@ angular.module('livepixApp')
             var newPic = JSON.parse(pack.data);
 
             if (newPic.type === "add") {
-                console.log('Nouvelle photo ajoutée');
+                console.log('New picture added to $scope.gallery');
                 $scope.gallery.push(newPic.path);
             }
 
@@ -25,13 +25,8 @@ angular.module('livepixApp')
             }
         });
 
-
         mySocket.setHandler('close', function(msg) {
             console.log('Connection to server failed' || msg);
-        });
-
-        
-
-
+        }); 
     
 }]);

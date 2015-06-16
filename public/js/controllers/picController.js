@@ -1,11 +1,12 @@
 angular.module('livepixApp')
 
 
-.controller('picController', ['$scope','$routeParams', '$mdDialog',
-    function($scope, $routeParams, $mdDialog) {
+.controller('picController', ['$scope','$routeParams', '$mdDialog','$http',
+    function($scope, $routeParams, $mdDialog, $http) {
     
     $scope.originalSrc = '/gallery/'+ $routeParams.id;    
-    
+    $scope.filterGallery = [];
+
     $scope.printIt = function($event) { 
         var par = angular.element(document.body);
         $mdDialog.show({
@@ -52,14 +53,24 @@ angular.module('livepixApp')
         } 
     };
 
-    var filters = ['sinCity','sunRise','love','grungy','hazyDays','lomo'];
-    $scope.filterGallery = [];
 
+    var filters = ['lomo','orangePeel'];
     filters.forEach(function(f) {
-        $scope.filterGallery.push('/filters/'+ f + '/gallery/' + $routeParams.id);
-        console.log($scope.filterGallery);
+        $http({method: 'GET', url: '/filters/' + f + '/gallery/' + $routeParams.id})
+            .success(function(data, status) {
+                var data = data.split('/');
+                var data = data.slice(5);
+                var imgName = data.pop();
+                data.push('tmp');
+                data.push(imgName);
+                var parseData = data.join('/');
+                
+                console.log(parseData);
+                $scope.filterGallery.push('/' + parseData);
+            }).error(function(data, status){
+                console.log(data + ' ' + status);
+            });
     });
-
     
 
 }]);
