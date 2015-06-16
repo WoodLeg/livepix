@@ -4,9 +4,9 @@ angular.module('livepixApp')
 .controller('picController', ['$scope','$routeParams', '$mdDialog',
     function($scope, $routeParams, $mdDialog) {
     
-    $scope.src = '/gallery/'+ $routeParams.id;
-
-    $scope.printIt = function($event) {
+    $scope.originalSrc = '/gallery/'+ $routeParams.id;    
+    
+    $scope.printIt = function($event) { 
         var par = angular.element(document.body);
         $mdDialog.show({
             parent: par,
@@ -51,4 +51,15 @@ angular.module('livepixApp')
             }
         } 
     };
+
+    var filters = ['sinCity','sunRise','love','grungy','hazyDays','lomo'];
+    $scope.filterGallery = [];
+
+    filters.forEach(function(f) {
+        $scope.filterGallery.push('/filters/'+ f + '/gallery/' + $routeParams.id);
+        console.log($scope.filterGallery);
+    });
+
+    
+
 }]);
