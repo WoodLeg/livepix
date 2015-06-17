@@ -8,6 +8,8 @@ angular.module('livepixApp')
     $scope.filterGallery = [];
 
     $scope.filterHide = true;
+    $scope.loadingPics = true;
+    $scope.alreadyOpened = false;
 
     $scope.printIt = function($event) { 
         var par = angular.element(document.body);
@@ -60,25 +62,29 @@ angular.module('livepixApp')
     $scope.showFiltered = function() {
         if ($scope.filterHide === false ) {
             $scope.filterHide = true;
+            $scope.alreadyOpened = true;
         } else {
             $scope.filterHide = false; 
-            var filters = ['lomo','orangePeel'];
-            generateFilter(filters);
+            if ($scope.alreadyOpened == false) {
+                var filters = ['lomo','orangePeel'];
+                generateFilter(filters);
+            }
         }
     }
+
     
     function generateFilter(filters) {
         filters.forEach(function(f) {
                 $http({method: 'GET', url: '/filters/' + f + '/gallery/' + $routeParams.id})
                     .success(function(data, status) {
-                        var data = data.split('/');
-                        var data = data.slice(5);
-                        var imgName = data.pop();
-                        data.push('tmp');
-                        data.push(imgName);
-                        var parseData = data.join('/');
-                        
-                        console.log(parseData);
+                        // Url management
+                            var data = data.split('/');
+                            var data = data.slice(5);
+                            var imgName = data.pop();
+                            data.push('tmp');
+                            data.push(imgName);
+                            var parseData = data.join('/');        
+                        // Store the filtered URL path
                         $scope.filterGallery.push('/' + parseData);
                     }).error(function(data, status){
                         console.log(data + ' ' + status);

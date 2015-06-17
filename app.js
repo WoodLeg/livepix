@@ -10,12 +10,14 @@ var Caman = require('caman').Caman; // Filter module
 var watcher = chokidar.watch('gallery', {ignored: /[\/\\]\./, persistent: true});
 
 // Connection of the client
-io.on('connection', function(client, response) {
+io.on('connection', function(client) {
+    
+    console.log(client.readyState);
     var client_ip = client.address.address;
     var client_port = client.address.port;
     console.log('New connection from: '+ client_ip + ' on ' + client_port);
     client.write(JSON.stringify({message: "Connection to Server established"}));
-
+    
     // Watch the folder /gallery for differents events
     var eventList = ['add','addDir','change','unlink','unlinkDir'];
     eventList.forEach(function(event){
@@ -51,7 +53,15 @@ io.on('connection', function(client, response) {
 }); 
 
 // Configure the route for the socket server
-io.installHandlers(server,{prefix: '/link'});
+io.installHandlers(server,
+    {
+        prefix: '/link', 
+        log: function(severity, message) {
+            console.log('Severity: ' + severity);
+            console.log('Message Socket Log: ' + message);
+        }
+    }
+);
 
 app.use(express.static(__dirname + '/public'));
 

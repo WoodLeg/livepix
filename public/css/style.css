@@ -31,3 +31,8 @@ md-card{
 md-dialog{
     color: #3C3C3C;
 }
+
+.mainPic {
+    margin:0;
+    padding:0;
+}

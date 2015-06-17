@@ -28,5 +28,5 @@ angular.module('livepixApp')
         mySocket.setHandler('close', function(msg) {
             console.log('Connection to server failed' || msg);
         }); 
-    
+        
 }]);
