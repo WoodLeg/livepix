@@ -2,7 +2,7 @@
 
     <md-card flex="75">
             <img ng-src="{{ originalSrc }}" class="md-card-image" alt="image caption">
-        <md-card-content>
+        <md-card-content ng-hide="filterHide">
             <md-grid-list md-cols-sm="1" md-cols-md="3" md-cols-gt-md="4" md-row-height="16:9" md-gutter="8px" md-gutter-gt-sm="15px">
                     <md-grid-tile md-colspan="1" md-rowspan="1">
                         <img ng-src="{{ originalSrc }}" /> 
@@ -12,12 +12,15 @@
                     </md-grid-tile>
             </md-grid-list>
         </md-card-content>
-        <md-divider></md-divider>        
-        <div class="md-actions" layout="row" layout-align="end center">
-            <md-button ng-click="printIt($event)" >Print it !</md-button>
-            <md-button ng-click="mailIt($event)">Mail it !</md-button>
+        <md-divider></md-divider>
+        <div class="actions_container" layout="row">
+            <div class="md-actions"  flex="70" layou-align="start center">
+                <md-button ng-click="showFiltered()"> Show Filters </md-button> 
+            </div>
+            <div class="md-actions"  layout-align="end center">
+                <md-button class="md-raised" ng-click="printIt($event)" >Print it !</md-button>
+                <md-button class="md-raised" ng-click="mailIt($event)">Mail it !</md-button>
+            </div>
         </div>
     </md-card>
-
-
 </div>

@@ -7,6 +7,8 @@ angular.module('livepixApp')
     $scope.originalSrc = '/gallery/'+ $routeParams.id;    
     $scope.filterGallery = [];
 
+    $scope.filterHide = true;
+
     $scope.printIt = function($event) { 
         var par = angular.element(document.body);
         $mdDialog.show({
@@ -54,23 +56,36 @@ angular.module('livepixApp')
     };
 
 
-    var filters = ['lomo','orangePeel'];
-    filters.forEach(function(f) {
-        $http({method: 'GET', url: '/filters/' + f + '/gallery/' + $routeParams.id})
-            .success(function(data, status) {
-                var data = data.split('/');
-                var data = data.slice(5);
-                var imgName = data.pop();
-                data.push('tmp');
-                data.push(imgName);
-                var parseData = data.join('/');
-                
-                console.log(parseData);
-                $scope.filterGallery.push('/' + parseData);
-            }).error(function(data, status){
-                console.log(data + ' ' + status);
-            });
-    });
+
+    $scope.showFiltered = function() {
+        if ($scope.filterHide === false ) {
+            $scope.filterHide = true;
+        } else {
+            $scope.filterHide = false; 
+            var filters = ['lomo','orangePeel'];
+            generateFilter(filters);
+        }
+    }
     
+    function generateFilter(filters) {
+        filters.forEach(function(f) {
+                $http({method: 'GET', url: '/filters/' + f + '/gallery/' + $routeParams.id})
+                    .success(function(data, status) {
+                        var data = data.split('/');
+                        var data = data.slice(5);
+                        var imgName = data.pop();
+                        data.push('tmp');
+                        data.push(imgName);
+                        var parseData = data.join('/');
+                        
+                        console.log(parseData);
+                        $scope.filterGallery.push('/' + parseData);
+                    }).error(function(data, status){
+                        console.log(data + ' ' + status);
+                    });
+            });
+
+    }
+        
 
 }]);
