@@ -114,7 +114,7 @@ app.get('/filters/lomo/gallery/*', function(request, response) {
 });
 
 // Route used to render the filtered picture to the view
-app.get('/filters/lomo/tmp/*', function(request, response) {
+app.get('/filters/lomo/render/*', function(request, response) {
     var path = __dirname + '/filters/lomo/' + request.params[0]; 
     response.sendFile(path);
 });
@@ -143,10 +143,40 @@ app.get('/filters/orangePeel/gallery/*', function(request, response) {
     });
 });
 
-app.get('/filters/orangePeel/tmp/*', function(request, response) {
+app.get('/filters/orangePeel/render/*', function(request, response) {
     var path = __dirname + '/filters/orangePeel/' + request.params[0]
     response.sendFile(path);
 });
+
+app.get('/filters/vintage/gallery/*', function(request, response) {
+    console.log('Vintage Rendering...');
+
+    var src_path = __dirname + '/gallery/' + request.params[0];
+    var save_path = __dirname + '/filters/vintage/' + request.params[0];
+
+    fs.exists(save_path, function(exists) {
+        if (exists) {
+            console.log('Filter already rendered');
+            response.json(save_path);
+        } else {
+            Caman(src_path, function() {
+                this.vintage();
+                this.render(function(){
+                    this.save(save_path);
+                    console.log('Filter Rendered');
+                    response.json(save_path);
+                });
+            });
+        }
+    });
+});
+
+app.get('/filters/vintage/render/*', function(request, response) {
+    var path = __dirname + '/filters/vintage/' + request.params[0];
+    response.sendFile(path);
+});
+
+
 
 
 var port = 8000;

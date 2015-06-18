@@ -1,15 +1,24 @@
 angular.module('livepixApp')
 
 
-.controller('picController', ['$scope','$routeParams', '$mdDialog','$http',
-    function($scope, $routeParams, $mdDialog, $http) {
+.controller('picController', ['$scope','$routeParams', '$mdDialog','$http', 'bigPicture',
+    function($scope, $routeParams, $mdDialog, $http, bigPicture) {
     
     $scope.originalSrc = '/gallery/'+ $routeParams.id;    
     $scope.filterGallery = [];
+    bigPicture.change = "";
+   
+    // Handle the bigPicture Display
+    $scope.$watch(function() {
+        return bigPicture.change;
+    }, function(newPic) {
+        $scope.activePicture = newPic || $scope.originalSrc;
+    });
+    
+
 
     $scope.filterHide = true;
-    $scope.loadingPics = true;
-    $scope.alreadyOpened = false;
+    var alreadyOpened = false;
 
     $scope.printIt = function($event) { 
         var par = angular.element(document.body);
@@ -58,15 +67,15 @@ angular.module('livepixApp')
     };
 
 
-
+    /********** FILTERS MANAGEMENT **********/
     $scope.showFiltered = function() {
         if ($scope.filterHide === false ) {
             $scope.filterHide = true;
-            $scope.alreadyOpened = true;
+            alreadyOpened = true;
         } else {
             $scope.filterHide = false; 
-            if ($scope.alreadyOpened == false) {
-                var filters = ['lomo','orangePeel'];
+            if (alreadyOpened == false) {
+                var filters = ['lomo','orangePeel','vintage'];
                 generateFilter(filters);
             }
         }
@@ -74,24 +83,32 @@ angular.module('livepixApp')
 
     
     function generateFilter(filters) {
-        filters.forEach(function(f) {
-                $http({method: 'GET', url: '/filters/' + f + '/gallery/' + $routeParams.id})
-                    .success(function(data, status) {
-                        // Url management
-                            var data = data.split('/');
-                            var data = data.slice(5);
-                            var imgName = data.pop();
-                            data.push('tmp');
-                            data.push(imgName);
-                            var parseData = data.join('/');        
-                        // Store the filtered URL path
-                        $scope.filterGallery.push('/' + parseData);
-                    }).error(function(data, status){
-                        console.log(data + ' ' + status);
-                    });
-            });
-
+        angular.forEach(filters, function(f) {
+            delayRequest(f, $routeParams.id);
+        });
     }
-        
 
+    function delayRequest(filter, id) {
+        setTimeout(function() {
+            $http({method: 'GET', url: '/filters/' + filter + '/gallery/' + id})
+                .success(function(data, status) {
+                    //Url management
+                    var parseData = urlHandler(data);
+                    $scope.filterGallery.push('/' + parseData);
+                }).error(function(data, status) {
+                    console.log(data + ' ' + status);
+                });
+            console.log('Envoie request pour ' + filter);
+        }, 3000);
+    }
+
+    function urlHandler(data){
+        var data = data.split('/');
+        var data = data.slice(5);
+        var imgName = data.pop();
+        data.push('render');
+        data.push(imgName);
+        var parseData = data.join('/');
+        return parseData;
+    }
 }]);

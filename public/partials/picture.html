@@ -2,23 +2,21 @@
 
     <md-card flex="75">
         <div class="mainPic"> 
-            <img ng-src="{{ originalSrc }}" class="md-card-image" alt="image caption">
+            <img ng-src="{{ activePicture }}" class="md-card-image" alt="image caption">
         </div>
         <md-card-content ng-hide="filterHide">
             <md-grid-list md-cols-sm="1" md-cols-md="3" md-cols-gt-md="4" md-row-height="16:9" md-gutter="8px" md-gutter-gt-sm="15px">
-                    <md-grid-tile md-colspan="1" md-rowspan="1">
-                        <img ng-src="{{ originalSrc }}" /> 
-                    </md-grid-tile>
+                    <md-grid-tile  md-colspan="1" md-rowspan="1">
+                        <img ng-src="{{ originalSrc }}" filter-hover ng-click="changeBig(originalSrc)" /> 
+                    </md-grid-tile> 
                     <md-grid-tile ng-repeat="filterSrc in filterGallery" md-colspan="1" md-rowspan="1">
-                        
-                        <md-progress-circular  md-mode="indeterminate"></md-progress-circular>
-                        <img ng-src="{{ filterSrc }}" />
+                        <img ng-src="{{ filterSrc }}" filter-hover ng-click="changeBig(filterSrc)"/>
                     </md-grid-tile>
             </md-grid-list>
         </md-card-content>
         <md-divider ng_hide="filterHide"></md-divider>
         <div class="actions_container" layout="row">
-            <div class="md-actions"  flex="65" layou-align="start center">
+            <div class="md-actions"  flex-sm="30"flex-gt-sm="35" flex-md="60" flex-gt-md="75" layou-align="start center">
                 <md-button ng-click="showFiltered()"> Show Filters </md-button> 
             </div>
             <div class="md-actions"  layout-align="end center">
