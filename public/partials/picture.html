@@ -1,5 +1,21 @@
-<div layout="row" layout-align="center center">
-
+<div layout-sm="column" layout-gt-sm="row">
+    <div class="lock-size" layout="row" layout-align-sm="start start" layout-align-gt-sm="center start">    
+        <md-fab-speed-dial md-open="bubble.isOpen" md-direction="{{bubble.direction}}" ng-class="bubble.mode">
+            <md-fab-trigger>
+                <md-button aria-label="menu" class="md-fab md-warn">=
+                </md-button>
+            </md-fab-trigger>
+            <md-fab-actions>
+                <md-button aria-label="home" class="md-fab md-raised md-mini">#
+                </md-button>
+                <md-button aria-label="home" class="md-fab md-raised md-mini">#
+                </md-button>
+                <md-button aria-label="home" class="md-fab md-raised md-mini">#
+                </md-button>
+            <md-fab-actions>
+        </md-fab-speed-dial>
+    </div>
+    
     <md-card flex="75">
         <div class="mainPic"> 
             <img ng-src="{{ activePicture }}" class="md-card-image" alt="image caption">

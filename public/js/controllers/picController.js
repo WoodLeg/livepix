@@ -1,13 +1,34 @@
 angular.module('livepixApp')
 
 
-.controller('picController', ['$scope','$routeParams', '$mdDialog','$http', 'bigPicture',
-    function($scope, $routeParams, $mdDialog, $http, bigPicture) {
+.controller('picController', ['$scope','$routeParams', '$mdDialog','$http', 'bigPicture', '$mdMedia',
+    function($scope, $routeParams, $mdDialog, $http, bigPicture, $mdMedia) {
     
+    // Variable declarations
     $scope.originalSrc = '/gallery/'+ $routeParams.id;    
     $scope.filterGallery = [];
     bigPicture.change = "";
+    $scope.filterHide = true;
+    var alreadyOpened = false;  
+    $scope.bubble = {
+        isOpen: false,
+        direction: "down",
+        mode: "md-scale",
+    }
+
    
+    // Menu direction for mobile
+    $scope.$watch(function() {
+        return $mdMedia('sm');
+    }, function(small) {
+        if (small) {
+            $scope.bubble.direction = "right";
+        } else {
+            $scope.bubble.direction = "down";
+        }
+    })
+    
+    
     // Handle the bigPicture Display
     $scope.$watch(function() {
         return bigPicture.change;
@@ -15,10 +36,6 @@ angular.module('livepixApp')
         $scope.activePicture = newPic || $scope.originalSrc;
     });
     
-
-
-    $scope.filterHide = true;
-    var alreadyOpened = false;
 
     $scope.printIt = function($event) { 
         var par = angular.element(document.body);
@@ -89,17 +106,15 @@ angular.module('livepixApp')
     }
 
     function delayRequest(filter, id) {
-        setTimeout(function() {
-            $http({method: 'GET', url: '/filters/' + filter + '/gallery/' + id})
-                .success(function(data, status) {
-                    //Url management
-                    var parseData = urlHandler(data);
-                    $scope.filterGallery.push('/' + parseData);
-                }).error(function(data, status) {
-                    console.log(data + ' ' + status);
-                });
-            console.log('Envoie request pour ' + filter);
-        }, 3000);
+        $http({method: 'GET', url: '/filters/' + filter + '/gallery/' + id})
+            .success(function(data, status) {
+                //Url management
+                var parseData = urlHandler(data);
+                $scope.filterGallery.push('/' + parseData);
+            }).error(function(data, status) {
+                console.log(data + ' ' + status);
+            });
+        console.log('Envoie request pour ' + filter);
     }
 
     function urlHandler(data){
