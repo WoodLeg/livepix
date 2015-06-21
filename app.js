@@ -6,6 +6,9 @@ var io = sockjs.createServer({});
 var chokidar = require('chokidar'); // Allow to watch a folder
 var fs = require('fs');
 var Caman = require('caman').Caman; // Filter module
+var filter = require('./filters');
+
+
 
 var watcher = chokidar.watch('gallery', {ignored: /[\/\\]\./, persistent: true});
 
@@ -89,6 +92,13 @@ app.get('/thumbs/gallery/*', function(request, response) {
     });
 });
 
+
+
+var filtersAvail = filter.parser('filters/init');
+filter.makeDir(filtersAvail);
+
+
+
 // Generate the Lomo Filter and send the path to the picture to the view
 app.get('/filters/lomo/gallery/*', function(request, response) {
     console.log('Lomo Filter Rendering...');
@@ -112,6 +122,9 @@ app.get('/filters/lomo/gallery/*', function(request, response) {
         }
     });
 });
+
+
+
 
 // Route used to render the filtered picture to the view
 app.get('/filters/lomo/render/*', function(request, response) {
