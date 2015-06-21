@@ -1,16 +1,16 @@
 <div layout-sm="column" layout-gt-sm="row">
-    <div class="lock-size" layout="row" layout-align-sm="start start" layout-align-gt-sm="center start">    
-        <md-fab-speed-dial md-open="bubble.isOpen" md-direction="{{bubble.direction}}" ng-class="bubble.mode">
+    <div class="lock-size-row" bubble layout="row" layout-align-sm="start start" layout-align-gt-sm="center start">    
+        <md-fab-speed-dial  md-open="bubble.isOpen" md-direction="{{bubble.direction}}" ng-class="bubble.mode">
             <md-fab-trigger>
                 <md-button aria-label="menu" class="md-fab md-warn">=
                 </md-button>
             </md-fab-trigger>
             <md-fab-actions>
-                <md-button aria-label="home" class="md-fab md-raised md-mini">#
+                <md-button aria-label="home" ng-click="home()" class="md-fab md-raised md-mini">#
                 </md-button>
-                <md-button aria-label="home" class="md-fab md-raised md-mini">#
+                <md-button aria-label="print" ng-click="printIt($event)" class="md-fab md-raised md-mini">#
                 </md-button>
-                <md-button aria-label="home" class="md-fab md-raised md-mini">#
+                <md-button aria-label="mail" ng-click="mailIt($event)" class="md-fab md-raised md-mini">#
                 </md-button>
             <md-fab-actions>
         </md-fab-speed-dial>
@@ -24,9 +24,13 @@
             <md-grid-list md-cols-sm="1" md-cols-md="3" md-cols-gt-md="4" md-row-height="16:9" md-gutter="8px" md-gutter-gt-sm="15px">
                     <md-grid-tile  md-colspan="1" md-rowspan="1">
                         <img ng-src="{{ originalSrc }}" filter-hover ng-click="changeBig(originalSrc)" /> 
-                    </md-grid-tile> 
+                    </md-grid-tile>
                     <md-grid-tile ng-repeat="filterSrc in filterGallery" md-colspan="1" md-rowspan="1">
-                        <img ng-src="{{ filterSrc }}" filter-hover ng-click="changeBig(filterSrc)"/>
+                       
+                       <img ng-src="{{ filterSrc }}" filter-hover ng-click="changeBig(filterSrc)"/>
+                    </md-grid-tile> 
+                    <md-grid-tile loading-show  md-colspan="1" md-rowspan="1">
+                        <md-progress-circular md-mode="indeterminate" ></md-progress-circular>
                     </md-grid-tile>
             </md-grid-list>
         </md-card-content>
@@ -35,10 +39,12 @@
             <div class="md-actions"  flex-sm="30"flex-gt-sm="35" flex-md="60" flex-gt-md="75" layou-align="start center">
                 <md-button ng-click="showFiltered()"> Show Filters </md-button> 
             </div>
+            <!--
             <div class="md-actions"  layout-align="end center">
                 <md-button class="md-raised" ng-click="printIt($event)" >Print it !</md-button>
                 <md-button class="md-raised" ng-click="mailIt($event)">Mail it !</md-button>
             </div>
+            -->
         </div>
     </md-card>
 </div>

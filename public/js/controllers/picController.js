@@ -1,33 +1,23 @@
 angular.module('livepixApp')
 
 
-.controller('picController', ['$scope','$routeParams', '$mdDialog','$http', 'bigPicture', '$mdMedia',
-    function($scope, $routeParams, $mdDialog, $http, bigPicture, $mdMedia) {
+.controller('picController', ['$scope','$routeParams', '$mdDialog','$http', 'bigPicture', '$mdMedia','$location',
+    function($scope, $routeParams, $mdDialog, $http, bigPicture, $mdMedia, $location) {
     
     // Variable declarations
     $scope.originalSrc = '/gallery/'+ $routeParams.id;    
     $scope.filterGallery = [];
+    $scope.loading = true;
     bigPicture.change = "";
     $scope.filterHide = true;
     var alreadyOpened = false;  
+    
     $scope.bubble = {
         isOpen: false,
         direction: "down",
         mode: "md-scale",
     }
 
-   
-    // Menu direction for mobile
-    $scope.$watch(function() {
-        return $mdMedia('sm');
-    }, function(small) {
-        if (small) {
-            $scope.bubble.direction = "right";
-        } else {
-            $scope.bubble.direction = "down";
-        }
-    })
-    
     
     // Handle the bigPicture Display
     $scope.$watch(function() {
@@ -36,6 +26,9 @@ angular.module('livepixApp')
         $scope.activePicture = newPic || $scope.originalSrc;
     });
     
+    $scope.home = function() {
+        $location.path('/');
+    }
 
     $scope.printIt = function($event) { 
         var par = angular.element(document.body);
@@ -98,7 +91,7 @@ angular.module('livepixApp')
         }
     }
 
-    
+
     function generateFilter(filters) {
         angular.forEach(filters, function(f) {
             delayRequest(f, $routeParams.id);
@@ -106,13 +99,16 @@ angular.module('livepixApp')
     }
 
     function delayRequest(filter, id) {
+        $scope.loading = true;
         $http({method: 'GET', url: '/filters/' + filter + '/gallery/' + id})
             .success(function(data, status) {
                 //Url management
                 var parseData = urlHandler(data);
                 $scope.filterGallery.push('/' + parseData);
+                $scope.loading = false;
             }).error(function(data, status) {
                 console.log(data + ' ' + status);
+            }).finally(function() {
             });
         console.log('Envoie request pour ' + filter);
     }
