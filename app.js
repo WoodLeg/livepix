@@ -7,10 +7,9 @@ var chokidar = require('chokidar'); // Allow to watch a folder
 var fs = require('fs');
 var Caman = require('caman').Caman; // Filter module
 var filter = require('./filters');
-var path = require('path');
 
-// Routes
 
+// Routes handlers
 var soloPicture = require('./routes/picture.js');
 var filterRender = require('./routes/filterRender.js');
 
@@ -77,7 +76,7 @@ app.use(express.static(__dirname + '/public'));
 
 app.use('/gallery', express.static(__dirname + '/gallery'));
 
-// Generate the thumbs if they don't exist and send the picture the view
+// Generate the thumbs if they don't exist and send the picture to the view
 app.get('/thumbs/gallery/*', function(request, response) {
     var src_path = __dirname + '/gallery/'+ request.params[0];
     var dist_path = __dirname + '/thumbs/' + request.params[0];
@@ -108,9 +107,6 @@ var filtersAvail = filter.parser('filters/init');
 filter.makeDir(filtersAvail);
 
 // Routes
-
-
-
 app.use('/picture', soloPicture);
 app.use(__dirname + '/filters', filterRender);
 

@@ -16,7 +16,6 @@ function parser(dirPath) {
 }
 
 // Generate filters' folders reguarding the filters'array given
-
 function makeDir(array) {
     array.forEach(function(folder_name) {
         fs.exists(__dirname + '/filters/' + folder_name, function(exists) {
@@ -35,6 +34,7 @@ function makeDir(array) {
     });
 }
 
+// Generate the filters' pictures if they don't exist
 function engage(filters, name, getFilters) {
     var src_path = __dirname + '/gallery/' + name;
     var generated = [];

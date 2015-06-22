@@ -2,16 +2,17 @@ angular.module('livepixApp')
 
 .controller('mainController',['$scope','mySocket','gallery',
     function($scope, mySocket, gallery){
-    
+
         $scope.title = "Livepix";
         $scope.gallery = gallery.gallery;
-        
 
+        // Connection to the Socket Server
         mySocket.setHandler('open', function(){
             console.log('Demand for connection...');
         });
-       
 
+
+        // Event listener for message event, add a picture to the gallery display
         mySocket.setHandler('message', function(pack){
             var newPic = JSON.parse(pack.data);
 
@@ -28,6 +29,6 @@ angular.module('livepixApp')
 
         mySocket.setHandler('close', function(msg) {
             console.log('Connection to server failed' || msg);
-        }); 
-        
+        });
+
 }]);

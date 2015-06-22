@@ -11,7 +11,7 @@ router.param('id', function(request, response, next, id){
     next();
 })
 
-
+// Send the file to the view
 router.route('/:filter/:id')
     .get(function(request, response) {
         response.sendFile(request.originalUrl);

@@ -30,20 +30,7 @@ angular.module('livepixApp')
             console.log(err);
         });
 
-/**
-    $scope.askFiltered = function() {
-        $http({methid: 'GET', url: '/picture/' + $routeParams.id})
-            .success(function(data, status){
-                console.log(data);
-                console.log(status);
-            }).error(function(data, status) {
-                console.log(data);
-                console.log(status);
-            });
-    }
-    **/
-
-
+    // Display the filters on the page or not when "show filters" is clicked
     $scope.showFiltered = function() {
         if ($scope.filterHide) {
             $scope.filterHide = false;
@@ -65,6 +52,7 @@ angular.module('livepixApp')
         mode: "md-scale",
     }
 
+    // Launch the impression of the bigPicture
     $scope.printIt = function($event) {
         var par = angular.element(document.body);
         $mdDialog.show({
@@ -91,6 +79,7 @@ angular.module('livepixApp')
         }
     };
 
+    // Send a mail with the bigPicture
     $scope.mailIt = function($event) {
         var par = angular.element(document.body);
         $mdDialog.show({
@@ -110,6 +99,4 @@ angular.module('livepixApp')
             }
         }
     };
-
-
 }]);
