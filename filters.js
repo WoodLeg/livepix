@@ -1,7 +1,6 @@
 var fs = require('fs');
 var Caman = require('caman').Caman;
-
-
+var async = require('async');
 
 
 // Parse given path for .filters and return an array of filters
@@ -30,34 +29,45 @@ function makeDir(array) {
                     }
                 })
             } else {
-                console.log('Folder already exists');
+                console.log('Folder ' + folder_name+ ' already exists');
             }
         });
     });
 }
 
-function actionFilter(array, name) {
+function engage(filters, name, getFilters) {
     var src_path = __dirname + '/gallery/' + name;
-    array.forEach(function(filter) {
-        var dst_path = __dirname + '/filters/' + filter + '/' + name;
-        console.log(dst_path);
+    var generated = [];
 
+    async.each(filters, function(filter, callback){
+        var dst_path = __dirname + '/filters/' + filter + '/' + name;
         fs.exists(dst_path, function(exists) {
             if (exists) {
+                generated.push(dst_path);
                 console.log('Filter already rendered');
+                callback();
             } else {
                 Caman(src_path, function() {
                     this[filter]();
                     this.render(function() {
                         this.save(dst_path);
-                        console.log('Filter Rendered');
-                    }
-                }
+                        generated.push(dst_path);
+                        callback();
+                        console.log('Filter ' + filter +' Rendered');
+                    });
+                });
             }
         });
-    });
+    }, function(err){
+        if (err) {
+          console.log(err);
+        } else {
+          return getFilters(generated)
+        };
+      }
+    );
 }
 
 module.exports.parser = parser;
 module.exports.makeDir = makeDir;
-module.exports.engage = actionFilter;
+module.exports.engage = engage;

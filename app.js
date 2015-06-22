@@ -13,17 +13,18 @@ var path = require('path');
 
 var soloPicture = require('./routes/picture.js');
 
+
 var watcher = chokidar.watch('gallery', {ignored: /[\/\\]\./, persistent: true});
 
 // Connection of the client
 io.on('connection', function(client) {
-    
+
     console.log(client.readyState);
     var client_ip = client.address.address;
     var client_port = client.address.port;
     console.log('New connection from: '+ client_ip + ' on ' + client_port);
     client.write(JSON.stringify({message: "Connection to Server established"}));
-    
+
     // Watch the folder /gallery for differents events
     var eventList = ['add','addDir','change','unlink','unlinkDir'];
     eventList.forEach(function(event){
@@ -55,15 +56,15 @@ io.on('connection', function(client) {
  // End the connect - No data from the client
     client.on('data', function(msg){});
     client.on('close', function() {
-        console.log('Closing connection with ' + client_ip + ' on '+ client_port); 
+        console.log('Closing connection with ' + client_ip + ' on '+ client_port);
         console.log('--------------------------------------');
     });
-}); 
+});
 
 // Configure the route for the socket server
 io.installHandlers(server,
     {
-        prefix: '/link', 
+        prefix: '/link',
         log: function(severity, message) {
             console.log('Severity: ' + severity);
             console.log('Message Socket Log: ' + message);
@@ -77,9 +78,9 @@ app.use('/gallery', express.static(__dirname + '/gallery'));
 
 // Generate the thumbs if they don't exist and send the picture the view
 app.get('/thumbs/gallery/*', function(request, response) {
-    var src_path = __dirname + '/gallery/'+ request.params[0]; 
+    var src_path = __dirname + '/gallery/'+ request.params[0];
     var dist_path = __dirname + '/thumbs/' + request.params[0];
-    
+
     fs.exists(dist_path, function(exists){
         if (exists) {
             response.sendFile(dist_path);
@@ -92,7 +93,7 @@ app.get('/thumbs/gallery/*', function(request, response) {
                 height:281
             }, function(err, stdout, stderr){
                 if (!err){response.sendFile(dist_path);}
-            });            
+            });
         }
     });
 });
@@ -105,38 +106,14 @@ var filtersAvail = filter.parser('filters/init');
 // Generate filters' folders
 filter.makeDir(filtersAvail);
 
+// Routes
 
 app.use('/picture', soloPicture);
 
-app.get('/filters/vintage/gallery/*', function(request, response) {
-    console.log('Vintage Rendering...');
+app.get('/filters/*/*', function(request, response){
+    console.log(request.params[0]);
 
-    var src_path = __dirname + '/gallery/' + request.params[0];
-    var save_path = __dirname + '/filters/vintage/' + request.params[0];
-
-    fs.exists(save_path, function(exists) {
-        if (exists) {
-            console.log('Filter already rendered');
-            response.json(save_path);
-        } else {
-            Caman(src_path, function() {
-                this.vintage();
-                this.render(function(){
-                    this.save(save_path);
-                    console.log('Filter Rendered');
-                    response.json(save_path);
-                });
-            });
-        }
-    });
 });
-
-app.get('/filters/vintage/render/*', function(request, response) {
-    var path = __dirname + '/filters/vintage/' + request.params[0];
-    response.sendFile(path);
-});
-
-
 
 
 var port = 8000;
