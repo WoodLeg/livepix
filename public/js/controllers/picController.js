@@ -4,6 +4,7 @@ angular.module('livepixApp')
 .controller('picController', ['$scope','$routeParams', '$mdDialog','$http', 'bigPicture', '$mdMedia','$location',
     function($scope, $routeParams, $mdDialog, $http, bigPicture, $mdMedia, $location) {
     
+    console.log('---- PICTURE CONTROLLER ------');
     // Variable declarations
     $scope.originalSrc = '/gallery/'+ $routeParams.id;    
     $scope.filterGallery = [];
@@ -12,22 +13,32 @@ angular.module('livepixApp')
     $scope.filterHide = true;
     var alreadyOpened = false;  
     
-    $scope.bubble = {
-        isOpen: false,
-        direction: "down",
-        mode: "md-scale",
-    }
-
-    
+        
     // Handle the bigPicture Display
     $scope.$watch(function() {
         return bigPicture.change;
     }, function(newPic) {
         $scope.activePicture = newPic || $scope.originalSrc;
     });
+
+    $http({method: 'GET', url: '/picture/' + $routeParams.id})
+        .success(function(data, status) {
+            console.log(data);
+        }).error(function(err, status) {
+            console.log(err);
+        });
     
+
+
+    // Menu Stuff
     $scope.home = function() {
         $location.path('/');
+    }
+
+    $scope.bubble = {
+        isOpen: false,
+        direction: "down",
+        mode: "md-scale",
     }
 
     $scope.printIt = function($event) { 
@@ -77,49 +88,4 @@ angular.module('livepixApp')
     };
 
 
-    /********** FILTERS MANAGEMENT **********/
-    $scope.showFiltered = function() {
-        if ($scope.filterHide === false ) {
-            $scope.filterHide = true;
-            alreadyOpened = true;
-        } else {
-            $scope.filterHide = false; 
-            if (alreadyOpened == false) {
-                var filters = ['lomo','orangePeel','vintage'];
-                generateFilter(filters);
-            }
-        }
-    }
-
-
-    function generateFilter(filters) {
-        angular.forEach(filters, function(f) {
-            delayRequest(f, $routeParams.id);
-        });
-    }
-
-    function delayRequest(filter, id) {
-        $scope.loading = true;
-        $http({method: 'GET', url: '/filters/' + filter + '/gallery/' + id})
-            .success(function(data, status) {
-                //Url management
-                var parseData = urlHandler(data);
-                $scope.filterGallery.push('/' + parseData);
-                $scope.loading = false;
-            }).error(function(data, status) {
-                console.log(data + ' ' + status);
-            }).finally(function() {
-            });
-        console.log('Envoie request pour ' + filter);
-    }
-
-    function urlHandler(data){
-        var data = data.split('/');
-        var data = data.slice(5);
-        var imgName = data.pop();
-        data.push('render');
-        data.push(imgName);
-        var parseData = data.join('/');
-        return parseData;
-    }
 }]);

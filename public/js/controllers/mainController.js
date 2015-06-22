@@ -5,6 +5,7 @@ angular.module('livepixApp')
     
         $scope.title = "Livepix";
         $scope.gallery = gallery.gallery;
+        
 
         mySocket.setHandler('open', function(){
             console.log('Demand for connection...');
@@ -16,12 +17,12 @@ angular.module('livepixApp')
 
             if (newPic.type === "add") {
                 console.log('New picture added to $scope.gallery');
-                $scope.gallery.push(newPic.path);
+                $scope.gallery.push(newPic);
             }
 
             if (newPic.type === "unlink") {
-                console.log('La photo ' + newPic.path + ' a été supprimée');
-                $scope.gallery.splice($.inArray(newPic.path,$scope.gallery),1);
+                console.log('La photo ' + newPic.id + ' a été supprimée');
+                $scope.gallery.splice($.inArray(newPic.gallery_path,$scope.gallery),1);
             }
         });
 

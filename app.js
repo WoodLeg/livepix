@@ -7,8 +7,11 @@ var chokidar = require('chokidar'); // Allow to watch a folder
 var fs = require('fs');
 var Caman = require('caman').Caman; // Filter module
 var filter = require('./filters');
+var path = require('path');
 
+// Routes
 
+var soloPicture = require('./routes/picture.js');
 
 var watcher = chokidar.watch('gallery', {ignored: /[\/\\]\./, persistent: true});
 
@@ -26,8 +29,10 @@ io.on('connection', function(client) {
     eventList.forEach(function(event){
         watcher.on(event, function(path){
             setTimeout(function(){
+                var _id = path.split('/');
+                _id = _id.pop();
                 console.log('Evenement: ' + event +', path ' + path);
-                client.write(JSON.stringify({type: event, path: '/' + path }));
+                client.write(JSON.stringify({type: event, gallery_path: '/' + path, id: _id}));
             },500);
         });
     });
@@ -40,7 +45,7 @@ io.on('connection', function(client) {
                 return !(filename.match(/^\./));
             });
             filesInit.forEach(function(filename){
-                client.write(JSON.stringify({ type: 'add', path: '/gallery/' + filename }));
+                client.write(JSON.stringify({ type: 'add', gallery_path: '/gallery/' + filename, id: filename }));
             });
         }
 
@@ -93,73 +98,15 @@ app.get('/thumbs/gallery/*', function(request, response) {
 });
 
 
+/******** FILTERS PART *********/
 
+// Parsing init folder for .filters
 var filtersAvail = filter.parser('filters/init');
+// Generate filters' folders
 filter.makeDir(filtersAvail);
 
 
-
-// Generate the Lomo Filter and send the path to the picture to the view
-app.get('/filters/lomo/gallery/*', function(request, response) {
-    console.log('Lomo Filter Rendering...');
-
-    var src_path = __dirname + '/gallery/' + request.params[0];
-    var save_path = __dirname + '/filters/lomo/' + request.params[0];
-
-    fs.exists(save_path,function(exists) {
-        if (exists) {
-            console.log('Filter already rendered');
-            response.json(save_path);
-        } else {
-            Caman(src_path, function() {
-                this.lomo();
-                this.render(function() {
-                    this.save(save_path);
-                    console.log('Filter Rendered');
-                    response.json(save_path);
-                });
-            });
-        }
-    });
-});
-
-
-
-
-// Route used to render the filtered picture to the view
-app.get('/filters/lomo/render/*', function(request, response) {
-    var path = __dirname + '/filters/lomo/' + request.params[0]; 
-    response.sendFile(path);
-});
-
-
-app.get('/filters/orangePeel/gallery/*', function(request, response) {
-    console.log('OrangePeel Rendering...');
-
-    var src_path = __dirname + '/gallery/' + request.params[0];
-    var save_path = __dirname + '/filters/orangePeel/' + request.params[0];
-
-    fs.exists(save_path, function(exists) {
-        if (exists) {
-            console.log('Filter already rendered');
-            response.json(save_path);
-        } else {
-            Caman(src_path, function() {
-                this.orangePeel();
-                this.render(function(){
-                    this.save(save_path);
-                    console.log('Filter Rendered');
-                    response.json(save_path);
-                });
-            });
-        }
-    });
-});
-
-app.get('/filters/orangePeel/render/*', function(request, response) {
-    var path = __dirname + '/filters/orangePeel/' + request.params[0]
-    response.sendFile(path);
-});
+app.use('/picture', soloPicture);
 
 app.get('/filters/vintage/gallery/*', function(request, response) {
     console.log('Vintage Rendering...');

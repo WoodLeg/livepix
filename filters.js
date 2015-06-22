@@ -1,7 +1,10 @@
 var fs = require('fs');
+var Caman = require('caman').Caman;
 
 
 
+
+// Parse given path for .filters and return an array of filters
 function parser(dirPath) {
     var filterArrayInit = fs.readdirSync(dirPath);
     var filterArrayParsed = [];
@@ -12,6 +15,8 @@ function parser(dirPath) {
     });
     return filterArrayParsed;
 }
+
+// Generate filters' folders reguarding the filters'array given
 
 function makeDir(array) {
     array.forEach(function(folder_name) {
@@ -29,9 +34,30 @@ function makeDir(array) {
             }
         });
     });
-
 }
 
+function actionFilter(array, name) {
+    var src_path = __dirname + '/gallery/' + name;
+    array.forEach(function(filter) {
+        var dst_path = __dirname + '/filters/' + filter + '/' + name;
+        console.log(dst_path);
+
+        fs.exists(dst_path, function(exists) {
+            if (exists) {
+                console.log('Filter already rendered');
+            } else {
+                Caman(src_path, function() {
+                    this[filter]();
+                    this.render(function() {
+                        this.save(dst_path);
+                        console.log('Filter Rendered');
+                    }
+                }
+            }
+        });
+    });
+}
 
 module.exports.parser = parser;
 module.exports.makeDir = makeDir;
+module.exports.engage = actionFilter;
