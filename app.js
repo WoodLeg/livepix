@@ -12,6 +12,7 @@ var path = require('path');
 // Routes
 
 var soloPicture = require('./routes/picture.js');
+var filterRender = require('./routes/filterRender.js');
 
 
 var watcher = chokidar.watch('gallery', {ignored: /[\/\\]\./, persistent: true});
@@ -108,12 +109,10 @@ filter.makeDir(filtersAvail);
 
 // Routes
 
+
+
 app.use('/picture', soloPicture);
-
-app.get('/filters/*/*', function(request, response){
-    console.log(request.params[0]);
-
-});
+app.use(__dirname + '/filters', filterRender);
 
 
 var port = 8000;
