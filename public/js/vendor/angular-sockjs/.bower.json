@@ -17,6 +17,5 @@
   },
   "_source": "git://github.com/bendrucker/angular-sockjs.git",
   "_target": "~0.0.1",
-  "_originalSource": "angular-sockjs",
-  "_direct": true
+  "_originalSource": "angular-sockjs"
 }

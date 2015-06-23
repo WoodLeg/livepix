@@ -85,6 +85,7 @@ app.get('/thumbs/gallery/*', function(request, response) {
         if (exists) {
             response.sendFile(dist_path);
         } else {
+            /**
             console.log('----- Création Thumb -----');
             require('imagemagick').crop({
                 srcPath: src_path,
@@ -93,6 +94,13 @@ app.get('/thumbs/gallery/*', function(request, response) {
                 height:281
             }, function(err, stdout, stderr){
                 if (!err){response.sendFile(dist_path);}
+            });
+            **/
+            require('imagemagick').identify(src_path, function(err, data){
+                  if (err) throw err;
+                  console.log(data);
+                  console.log('Width: ' + data.properties['exif:exifimagewidth']);
+                  console.log('Height: ' + data.properties['exif:exifimagelength']);
             });
         }
     });

@@ -1,0 +1,28 @@
+{
+  "name": "livepix",
+  "version": "0.0.0",
+  "homepage": "https://github.com/WoodLeg/livepix",
+  "authors": [
+    "WoodLeg <paul.souvestre@gmail.com>"
+  ],
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/js/vendor/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.1",
+    "angular-material": "~0.10.0",
+    "angular-route": "~1.4.1",
+    "angular-sockjs": "~0.0.1",
+    "angular-masonry": "~0.11.1",
+    "sockjs": "~0.3.4"
+  }
+}
