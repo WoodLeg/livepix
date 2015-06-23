@@ -69,14 +69,14 @@ angular.module('livepixApp')
                 '       </md-button>' +
                 '   </div>' +
                 '</md-dialog>',
-            controller: DialogController
-        });
-        function DialogController($scope, $mdDialog, $routeParams){
-            $scope.picName = $routeParams.id;
-            $scope.closeDialog = function() {
-                $mdDialog.hide();
+            controller: function ($scope, $mdDialog, $routeParams){
+                $scope.picName = $routeParams.id;
+                $scope.closeDialog = function() {
+                    $mdDialog.hide();
+                }
             }
-        }
+        });
+
     };
 
     // Send a mail with the bigPicture
@@ -86,17 +86,17 @@ angular.module('livepixApp')
             parent: par,
             targetEvent: $event,
             templateUrl: 'partials/templates/mailDialogForm.html',
-            controller: DialogController
+            controller: function ($scope, $mdDialog, $routeParams){
+                $scope.picName = $routeParams.id;
+                $scope.closeDialog = function() {
+                    $mdDialog.hide();
+                }
+                $scope.send = function(mail) {
+                    alert("Photo envoyé à " + mail);
+                    $mdDialog.hide();
+                }
+            }
         });
-        function DialogController($scope, $mdDialog, $routeParams){
-            $scope.picName = $routeParams.id;
-            $scope.closeDialog = function() {
-                $mdDialog.hide();
-            }
-            $scope.send = function(mail) {
-                alert("Photo envoyé à " + mail);
-                $mdDialog.hide();
-            }
-        }
+
     };
 }]);
