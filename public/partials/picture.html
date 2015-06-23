@@ -25,16 +25,23 @@
                     <md-grid-tile  md-colspan="1" md-rowspan="1">
                         <img ng-src="{{ originalSrc }}" filter-hover ng-click="changeBig(originalSrc)" />
                     </md-grid-tile>
+
                     <md-grid-tile ng-repeat="filterSrc in filterGallery" md-colspan="1" md-rowspan="1">
 
                        <img ng-src="{{ filterSrc }}" filter-hover ng-click="changeBig(filterSrc)"/>
                     </md-grid-tile>
+
+                    <md-grid-tile loading-show md-colspan="1" md-rowspan="1">
+
+                       <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+
+                    </md-grid-tile>
             </md-grid-list>
         </md-card-content>
-        <md-divider ng_hide="filterHide"></md-divider>
+        <md-divider ng-hide="filterHide"></md-divider>
         <div class="actions_container" layout="row">
             <div class="md-actions"  flex-sm="30"flex-gt-sm="35" flex-md="60" flex-gt-md="75" layou-align="start center">
-                <md-button ng-click="showFiltered()"> Show Filters </md-button>
+                <md-button ng-click="showFiltered(); askFiltersPic()"> Show Filters </md-button>
             </div>
             <!--
             <div class="md-actions"  layout-align="end center">

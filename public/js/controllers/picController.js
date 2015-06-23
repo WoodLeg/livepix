@@ -23,12 +23,18 @@ angular.module('livepixApp')
 
 
     // Get all the paths for all filtered pictures generated
-    $http({method: 'GET', url: '/picture/' + $routeParams.id})
-        .success(function(data, status) {
-            $scope.filterGallery = data;
-        }).error(function(err, status) {
-            console.log(err);
-        });
+
+    $scope.askFiltersPic = function(){
+      $scope.loading = true;
+      $http({method: 'GET', url: '/picture/filters/' + $routeParams.id})
+          .success(function(data, status) {
+              $scope.filterGallery = data;
+          }).error(function(err, status) {
+              console.log(err);
+          }).finally(function(){
+             $scope.loading = false;
+          });
+    }
 
     // Display the filters on the page or not when "show filters" is clicked
     $scope.showFiltered = function() {
@@ -37,8 +43,6 @@ angular.module('livepixApp')
         } else {
             $scope.filterHide = true;
         }
-
-
     }
 
     // Menu Stuff

@@ -1,1 +1,1 @@
-rm gallery/* && rm thumbs/*
+rm filters/lomo/* && rm filters/orangePeel/* && rm filters/vintage/* && rm gallery/* && rm thumbs/*

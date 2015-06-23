@@ -11,10 +11,7 @@ angular.module('livepixApp')
                 if (!scope.loading) {
                     elem.detach();
                 }
-
             });
-
-            console.log(scope.filterGallery);
         }
     }
 });
