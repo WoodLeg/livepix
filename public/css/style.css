@@ -14,40 +14,31 @@ img{
     width: 100%;
     height: 100%;
 }
-
-md-grid-tile{
-    transition: all 300ms ease-out 50ms;
-}
-
 a{
     color:white;
     text-decoration: none;
 }
-
 a:hover {
     color: #FFFF00;
 }
-
 md-card{
     color: #3C3C3C;
 }
 md-dialog{
     color: #3C3C3C;
 }
-
 .mainPic {
     margin:0;
     padding:0;
 }
-
 .text-capitalize {
-    text-transform: capitalize; 
+    text-transform: capitalize;
 }
 .md-fab:hover, .md-fab.md-focused {
-    background-color: #000 !important; 
+    background-color: #000 !important;
 }
 p.note {
-    font-size: 1.2rem;    
+    font-size: 1.2rem;
 }
 .lock-size-row {
     margin-top: 30px;
@@ -65,4 +56,3 @@ p.note {
     margin-left: 10px;
     margin-top: 5px;
 }
-

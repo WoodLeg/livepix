@@ -12,14 +12,15 @@ function picGallery(request, response){
    fs.exists(rootDir + '/originals/thumbs', function(exists) {
       if (!exists) {
          makeDir(rootDir + '/originals/thumbs');
-         resizeAndRender(src_path, dst_path, 250, response);
+         resizeAndRender(src_path, dst_path, 300, response);
       } else {
-         resizeAndRender(src_path, dst_path, 250, response);
+         resizeAndRender(src_path, dst_path, 300, response);
       }
    });
 }
 
 function picMD(request, response){
+   console.log('picMD original');
    var src_path = rootDir + '/gallery/' + request.id;
    var dst_path = rootDir + '/originals/md/' + request.id;
 
@@ -40,9 +41,9 @@ function picSD(request, response){
    fs.exists(rootDir + '/originals/sd', function(exists){
       if (!exists) {
          makeDir(rootDir + '/originals/sd');
-         resizeAndRender(src_path, dst_path, 400, response);
+         resizeAndRender(src_path, dst_path, 200, response);
       } else {
-         resizeAndRender(src_path, dst_path, 400, response)
+         resizeAndRender(src_path, dst_path, 200, response);
       }
    });
 }

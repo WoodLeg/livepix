@@ -6,11 +6,11 @@ var io = sockjs.createServer({});
 var chokidar = require('chokidar'); // Allow to watch a folder
 var fs = require('fs');
 var Caman = require('caman').Caman; // Filter module
-var filter = require('./filters');
+var filter = require('./modules/filters');
 
 // Routes handlers
 var soloPicture = require('./routes/picture');
-var filterRender = require('./routes/filterRender');
+var filtersRoute = require('./routes/filtersRoute');
 var thumbsRoute = require('./routes/thumbsRoute')
 
 var watcher = chokidar.watch('gallery', {ignored: /[\/\\]\./, persistent: true});
@@ -81,10 +81,6 @@ io.installHandlers(server,
 
 app.use('/gallery', express.static(__dirname + '/gallery'));
 
-
-
-
-
 /******** FILTERS PART *********/
 
 // Parsing init folder for .filters
@@ -94,7 +90,7 @@ filter.makeDir(filtersAvail);
 
 // Routes
 app.use('/picture', soloPicture);
-app.use(__dirname + '/filters', filterRender);
+app.use('/filters', filtersRoute);
 app.use('/originals', thumbsRoute);
 
 var port = 8000;

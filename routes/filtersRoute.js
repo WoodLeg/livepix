@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
+var controller = require('../modules/filtersController')
+
 router.param('id', function(request, response, next, id){
     request.id = id;
     next();
@@ -11,11 +13,15 @@ router.param('id', function(request, response, next, id){
     next();
 })
 
+
+router.route('/:filter/sd/:id')
+      .get(controller.sdFilter);
+      
 // Send the file to the view
-router.route('/:filter/:id')
-    .get(function(request, response) {
-        response.sendFile(request.originalUrl);
-    });
+router.route('/:filter/md/:id')
+      .get();
+
+
 
 
 

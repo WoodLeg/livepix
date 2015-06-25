@@ -7,6 +7,7 @@ angular.module('livepixApp')
     console.log('---- PICTURE CONTROLLER ------');
     // Variable declarations
     $scope.originalSrc = '/gallery/'+ $routeParams.id;
+    $scope.sd_originalSrc = '/originals/sd/' + $routeParams.id;
     $scope.filterGallery = [];
     $scope.loading = true;
     bigPicture.change = "";
@@ -31,6 +32,7 @@ angular.module('livepixApp')
          $http({method: 'GET', url: '/picture/filters/' + $routeParams.id})
              .success(function(data, status) {
                  $scope.filterGallery = data;
+                 $scope.filterGallery.push($scope.sd_originalSrc);
              }).error(function(err, status) {
                  console.log(err);
              }).finally(function(){

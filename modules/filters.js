@@ -1,7 +1,9 @@
 var fs = require('fs');
 var Caman = require('caman').Caman;
 var async = require('async');
+var path = require('path');
 
+var rootDir = path.dirname(__dirname);
 
 // Parse given path for .filters and return an array of filters
 function parser(dirPath) {
@@ -18,30 +20,30 @@ function parser(dirPath) {
 // Generate filters' folders reguarding the filters'array given
 function makeDir(array) {
     array.forEach(function(folder_name) {
-        fs.exists(__dirname + '/filters/' + folder_name, function(exists) {
+        fs.exists(rootDir + '/filters/' + folder_name, function(exists) {
             if (!exists) {
-                fs.mkdir(__dirname + '/filters/' + folder_name, function(err) {
+                fs.mkdir(rootDir + '/filters/' + folder_name, function(err) {
                     console.log('----' + folder_name + ' folder created -----');
                     if (err) {
                         throw err;
                     } else {
-                        fs.exists(__dirname + '/filters/' + folder_name + '/sd', function(err) {
+                        fs.exists(rootDir + '/filters/' + folder_name + '/sd', function(err) {
                            if (exists) {console.log('SD forlder already exists.')}
-                           fs.mkdir(__dirname + '/filters/' + folder_name + '/sd', function(err) {
+                           fs.mkdir(rootDir + '/filters/' + folder_name + '/sd', function(err) {
                               if (err) throw err;
                               console.log('SD folder created');
                            });
                         });
-                        fs.exists(__dirname + '/filters/' + folder_name + '/md', function(err) {
+                        fs.exists(rootDir + '/filters/' + folder_name + '/md', function(err) {
                            if (exists) {console.log('MD forlder already exists.')}
-                           fs.mkdir(__dirname + '/filters/' + folder_name + '/md', function(err) {
+                           fs.mkdir(rootDir + '/filters/' + folder_name + '/md', function(err) {
                               if (err) throw err;
                               console.log('MD folder created');
                            });
                         });
-                        fs.exists(__dirname + '/filters/' + folder_name + '/hd', function(err) {
+                        fs.exists(rootDir + '/filters/' + folder_name + '/hd', function(err) {
                            if (exists) {console.log('HD forlder already exists.')}
-                           fs.mkdir(__dirname + '/filters/' + folder_name + '/hd', function(err) {
+                           fs.mkdir(rootDir + '/filters/' + folder_name + '/hd', function(err) {
                               if (err) throw err;
                               console.log('HD folder created');
                            });
@@ -57,14 +59,15 @@ function makeDir(array) {
 
 // Generate the filters' pictures if they don't exist
 function engage(filters, name, getFilters) {
-    var src_path = __dirname + '/gallery/' + name;
+    var src_path = rootDir + '/gallery/' + name;
     var generated = [];
 
     async.each(filters, function(filter, callback){
-        var dst_path = __dirname + '/filters/' + filter + '/' + name;
+        var dst_path = rootDir + '/filters/' + filter + '/hd/' + name;
+        var send_path = '/filters/' + filter + '/hd/' + name;
         fs.exists(dst_path, function(exists) {
             if (exists) {
-                generated.push(dst_path);
+                generated.push(send_path);
                 console.log('Filter already rendered');
                 callback();
             } else {
@@ -72,7 +75,7 @@ function engage(filters, name, getFilters) {
                     this[filter]();
                     this.render(function() {
                         this.save(dst_path);
-                        generated.push(dst_path);
+                        generated.push(send_path);
                         callback();
                         console.log('Filter ' + filter +' Rendered');
                     });

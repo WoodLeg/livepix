@@ -1,5 +1,6 @@
 rm gallery/* -f
 rm originals/thumbs/* -f
+rm originals/sd/* -f
 rm filters/lomo/hd/* -f
 rm filters/lomo/md/* -f
 rm filters/lomo/sd/* -f
