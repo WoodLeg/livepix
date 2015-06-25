@@ -14,5 +14,11 @@ router.param('id', function(request, response, next, id){
 .route('/thumbs/:id')
       .get(controller.picGallery);
 
+router.route('/md/:id')
+      .get(controller.picMD);
+
+router.route('/sd/:id')
+      .get(controller.picSD);
+
 
 module.exports = router;
