@@ -21,14 +21,35 @@ function makeDir(array) {
         fs.exists(__dirname + '/filters/' + folder_name, function(exists) {
             if (!exists) {
                 fs.mkdir(__dirname + '/filters/' + folder_name, function(err) {
-                    if(err) {
+                    console.log('----' + folder_name + ' folder created -----');
+                    if (err) {
                         throw err;
                     } else {
-                        console.log(folder_name + ' folder created');
+                        fs.exists(__dirname + '/filters/' + folder_name + '/sd', function(err) {
+                           if (exists) {console.log('SD forlder already exists.')}
+                           fs.mkdir(__dirname + '/filters/' + folder_name + '/sd', function(err) {
+                              if (err) throw err;
+                              console.log('SD folder created');
+                           });
+                        });
+                        fs.exists(__dirname + '/filters/' + folder_name + '/md', function(err) {
+                           if (exists) {console.log('MD forlder already exists.')}
+                           fs.mkdir(__dirname + '/filters/' + folder_name + '/md', function(err) {
+                              if (err) throw err;
+                              console.log('MD folder created');
+                           });
+                        });
+                        fs.exists(__dirname + '/filters/' + folder_name + '/hd', function(err) {
+                           if (exists) {console.log('HD forlder already exists.')}
+                           fs.mkdir(__dirname + '/filters/' + folder_name + '/hd', function(err) {
+                              if (err) throw err;
+                              console.log('HD folder created');
+                           });
+                        });
                     }
                 })
             } else {
-                console.log('Folder ' + folder_name+ ' already exists');
+                console.log('Folder ' + folder_name + ' already exists');
             }
         });
     });

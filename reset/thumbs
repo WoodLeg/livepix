@@ -1,0 +1,1 @@
+rm ../thumbs/gallery/* && rm ../thumbs/md/* && rm ../thumbs/sd/* 

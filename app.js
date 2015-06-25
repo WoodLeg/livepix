@@ -73,7 +73,10 @@ io.installHandlers(server,
 );
 
 app.use(express.static(__dirname + '/public'));
-
+app.use(function(request, response, next){
+   request.rootDir = __dirname;
+   next();
+})
 app.use('/gallery', express.static(__dirname + '/gallery'));
 
 // Generate the thumbs if they don't exist and send the picture to the view
@@ -85,26 +88,18 @@ app.get('/thumbs/gallery/*', function(request, response) {
         if (exists) {
             response.sendFile(dist_path);
         } else {
-            /**
             console.log('----- Création Thumb -----');
-            require('imagemagick').crop({
+            require('imagemagick').resize({
                 srcPath: src_path,
                 dstPath: dist_path,
-                width: 500,
-                height:281
+                width: 350,
             }, function(err, stdout, stderr){
                 if (!err){response.sendFile(dist_path);}
-            });
-            **/
-            require('imagemagick').identify(src_path, function(err, data){
-                  if (err) throw err;
-                  console.log(data);
-                  console.log('Width: ' + data.properties['exif:exifimagewidth']);
-                  console.log('Height: ' + data.properties['exif:exifimagelength']);
             });
         }
     });
 });
+
 
 
 /******** FILTERS PART *********/

@@ -8,8 +8,8 @@
   </md-grid-list>
   -->
 
-  <div masonry style="width: 95%; margin: 30px auto;">
-      <div style="margin:1em;" class="masonry-brick" ng-repeat="img in gallery">
+  <div masonry style="width: 97%; margin: 30px auto;">
+      <div style="margin:1em; border: 10px solid white;" class="masonry-brick" ng-repeat="img in gallery">
             <a ng-href="#/picture/{{img.id}}"><img  ng-src="../thumbs{{ img.gallery_path }}" /></a>
       </div>
   </div>

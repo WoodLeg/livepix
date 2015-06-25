@@ -26,14 +26,17 @@ angular.module('livepixApp')
 
     $scope.askFiltersPic = function(){
       $scope.loading = true;
-      $http({method: 'GET', url: '/picture/filters/' + $routeParams.id})
-          .success(function(data, status) {
-              $scope.filterGallery = data;
-          }).error(function(err, status) {
-              console.log(err);
-          }).finally(function(){
-             $scope.loading = false;
-          });
+      if (!alreadyOpened) {
+         alreadyOpened = true;
+         $http({method: 'GET', url: '/picture/filters/' + $routeParams.id})
+             .success(function(data, status) {
+                 $scope.filterGallery = data;
+             }).error(function(err, status) {
+                 console.log(err);
+             }).finally(function(){
+                $scope.loading = false;
+             });
+      }
     }
 
     // Display the filters on the page or not when "show filters" is clicked
