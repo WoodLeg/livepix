@@ -8,13 +8,19 @@ var fs = require('fs');
 var Caman = require('caman').Caman; // Filter module
 var filter = require('./filters');
 
-
 // Routes handlers
-var soloPicture = require('./routes/picture.js');
-var filterRender = require('./routes/filterRender.js');
-
+var soloPicture = require('./routes/picture');
+var filterRender = require('./routes/filterRender');
+var thumbsRoute = require('./routes/thumbsRoute')
 
 var watcher = chokidar.watch('gallery', {ignored: /[\/\\]\./, persistent: true});
+
+// Middlewares
+app.use(express.static(__dirname + '/public'));
+app.use(function(request, response, next){
+   request.rootDir = __dirname;
+   next();
+});
 
 // Connection of the client
 io.on('connection', function(client) {
@@ -33,7 +39,7 @@ io.on('connection', function(client) {
                 var _id = path.split('/');
                 _id = _id.pop();
                 console.log('Evenement: ' + event +', path ' + path);
-                client.write(JSON.stringify({type: event, gallery_path: '/' + path, id: _id}));
+                client.write(JSON.stringify({type: event, gallery_path: '/originals/thumbs/' + _id, id: _id}));
             },500);
         });
     });
@@ -46,7 +52,7 @@ io.on('connection', function(client) {
                 return !(filename.match(/^\./));
             });
             filesInit.forEach(function(filename){
-                client.write(JSON.stringify({ type: 'add', gallery_path: '/gallery/' + filename, id: filename }));
+                client.write(JSON.stringify({ type: 'add', gallery_path: 'originals/thumbs/' + filename, id: filename }));
             });
         }
 
@@ -72,33 +78,10 @@ io.installHandlers(server,
     }
 );
 
-app.use(express.static(__dirname + '/public'));
-app.use(function(request, response, next){
-   request.rootDir = __dirname;
-   next();
-})
+
 app.use('/gallery', express.static(__dirname + '/gallery'));
 
-// Generate the thumbs if they don't exist and send the picture to the view
-app.get('/thumbs/gallery/*', function(request, response) {
-    var src_path = __dirname + '/gallery/'+ request.params[0];
-    var dist_path = __dirname + '/thumbs/' + request.params[0];
 
-    fs.exists(dist_path, function(exists){
-        if (exists) {
-            response.sendFile(dist_path);
-        } else {
-            console.log('----- Création Thumb -----');
-            require('imagemagick').resize({
-                srcPath: src_path,
-                dstPath: dist_path,
-                width: 350,
-            }, function(err, stdout, stderr){
-                if (!err){response.sendFile(dist_path);}
-            });
-        }
-    });
-});
 
 
 
@@ -112,7 +95,7 @@ filter.makeDir(filtersAvail);
 // Routes
 app.use('/picture', soloPicture);
 app.use(__dirname + '/filters', filterRender);
-
+app.use('/originals', thumbsRoute);
 
 var port = 8000;
 server.listen(port, function(){

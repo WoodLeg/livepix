@@ -1,1 +1,14 @@
-rm filters/lomo/* && rm filters/orangePeel/* && rm filters/vintage/* && rm gallery/* && rm thumbs/*
+rm gallery/* -f
+rm originals/thumbs/* -f
+rm filters/lomo/hd/* -f
+rm filters/lomo/md/* -f
+rm filters/lomo/sd/* -f
+rm filters/lomo/*.jpg -f
+rm filters/orangePeel/hd/* -f
+rm filters/orangePeel/md/* -f
+rm filters/orangePeel/sd/* -f
+rm filters/orangePeel/*.jpg -f
+rm filters/vintage/hd/* -f
+rm filters/vintage/md/* -f
+rm filters/vintage/sd/* -f
+rm filters/vintage/*.jpg -f
