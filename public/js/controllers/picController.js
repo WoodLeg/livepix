@@ -1,68 +1,79 @@
 angular.module('livepixApp')
 
 
-.controller('picController', ['$scope','$routeParams', '$mdDialog','$http', 'bigPicture', '$mdMedia','$location',
-    function($scope, $routeParams, $mdDialog, $http, bigPicture, $mdMedia, $location) {
+.controller('picController', ['$scope','$routeParams', '$mdDialog','$http', 'bigPicture', '$mdMedia','$location', '$animate',
+    function($scope, $routeParams, $mdDialog, $http, bigPicture, $mdMedia, $location, $animate) {
 
-    console.log('---- PICTURE CONTROLLER ------');
-    // Variable declarations
-    $scope.originalSrc = '/gallery/'+ $routeParams.id;
-    $scope.sd_originalSrc = '/originals/sd/' + $routeParams.id;
-    $scope.filterGallery = [];
-    $scope.loading = true;
-    bigPicture.change = "";
-    $scope.filterHide = true;
-    var alreadyOpened = false;
+      $animate.enabled('masonry-brick', false);
+      console.log('---- PICTURE CONTROLLER ------');
+      // Variable declarations
+
+      var original = {
+         hd : '/gallery/' + $routeParams.id,
+         md : '/originals/md/' + $routeParams.id,
+         sd : '/originals/sd/' + $routeParams.id
+      }
+      $scope.originalSrc = original.hd;
+      $scope.sd_originalSrc = original.sd;
+      $scope.md_originalSrc = original.md;
+      $scope.filterGallery = [];
+      $scope.loading = true;
+      bigPicture.change = "";
+      $scope.filterHide = true;
+      var alreadyOpened = false;
 
 
-    // Handle the bigPicture Display
-    $scope.$watch(function() {
+      // Handle the bigPicture Display
+      $scope.$watch(function() {
         return bigPicture.change;
-    }, function(newPic) {
-        $scope.activePicture = newPic || $scope.originalSrc;
-    });
+      }, function(newPic) {
+        $scope.activePicture = newPic || $scope.md_originalSrc;
+      });
 
 
-    // Get all the paths for all filtered pictures generated
+      // Get all the paths for all filtered pictures generated
 
-    $scope.askFiltersPic = function(){
+      $scope.askFiltersPic = function(){
       $scope.loading = true;
       if (!alreadyOpened) {
          alreadyOpened = true;
          $http({method: 'GET', url: '/picture/filters/' + $routeParams.id})
              .success(function(data, status) {
-                 $scope.filterGallery = data;
-                 $scope.filterGallery.push($scope.sd_originalSrc);
+                data.push(original);
+                $scope.filterGallery = data;
              }).error(function(err, status) {
                  console.log(err);
              }).finally(function(){
                 $scope.loading = false;
              });
       }
-    }
+      }
 
-    // Display the filters on the page or not when "show filters" is clicked
-    $scope.showFiltered = function() {
+
+
+      // Display the filters on the page or not when "show filters" is clicked
+      $scope.showFiltered = function() {
         if ($scope.filterHide) {
             $scope.filterHide = false;
         } else {
             $scope.filterHide = true;
         }
-    }
+      }
 
-    // Menu Stuff
-    $scope.home = function() {
+      // Menu Stuff
+      $scope.home = function() {
         $location.path('/');
-    }
+      }
 
-    $scope.bubble = {
-        isOpen: false,
+
+      $scope.bubble = {
+        isOpen: true,
         direction: "down",
-        mode: "md-scale",
-    }
+        mode: "md-fling",
+      }
 
-    // Launch the impression of the bigPicture
-    $scope.printIt = function($event) {
+      // Launch the impression of the bigPicture
+      $scope.printIt = function($event) {
         var par = angular.element(document.body);
         $mdDialog.show({
             parent: par,
@@ -86,10 +97,10 @@ angular.module('livepixApp')
             }
         });
 
-    };
+      };
 
-    // Send a mail with the bigPicture
-    $scope.mailIt = function($event) {
+      // Send a mail with the bigPicture
+      $scope.mailIt = function($event) {
         var par = angular.element(document.body);
         $mdDialog.show({
             parent: par,
@@ -107,5 +118,5 @@ angular.module('livepixApp')
             }
         });
 
-    };
+      };
 }]);

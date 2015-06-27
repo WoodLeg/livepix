@@ -20,16 +20,15 @@ function picGallery(request, response){
 }
 
 function picMD(request, response){
-   console.log('picMD original');
    var src_path = rootDir + '/gallery/' + request.id;
    var dst_path = rootDir + '/originals/md/' + request.id;
 
    fs.exists(rootDir + '/originals/md', function(exists){
       if (!exists) {
          makeDir(rootDir + '/originals/md');
-         resizeAndRender(src_path, dst_path, 400, response);
+         resizeAndRender(src_path, dst_path, 1000, response);
       } else {
-         resizeAndRender(src_path, dst_path, 400, response)
+         resizeAndRender(src_path, dst_path, 1000, response)
       }
    });
 }

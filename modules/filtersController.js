@@ -6,15 +6,15 @@ var rootDir = path.dirname(__dirname);
 
 
 function mdFilter(request, response) {
-   var src_path = rootDir + '/filters/hd/' + request.id;
+   var src_path = rootDir + '/filters/' + request.filter + '/hd/' + request.id;
    var dst_path = rootDir + '/filters/'+ request.filter + '/md/' + request.id;
 
    fs.exists(rootDir + '/filters/' + request.filter +'/md', function(exists) {
       if (!exists) {
          makeDir(rootDir + '/filters/' + request.filter +'/md');
-         resizeAndRender(src_path, dst_path, 400, response);
+         resizeAndRender(src_path, dst_path, 1000, response);
       } else {
-         resizeAndRender(src_path, dst_path, 400, response);
+         resizeAndRender(src_path, dst_path, 1000, response);
       }
    });
 }
@@ -46,7 +46,7 @@ function resizeAndRender(_srcPath, _dstPath, _width, response){
             }, function(err){
                if (err) throw err;
                response.sendFile(_dstPath);
-            })
+            });
          }
    });
 }

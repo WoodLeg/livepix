@@ -16,10 +16,10 @@ router.param('id', function(request, response, next, id){
 
 router.route('/:filter/sd/:id')
       .get(controller.sdFilter);
-      
+
 // Send the file to the view
 router.route('/:filter/md/:id')
-      .get();
+      .get(controller.mdFilter);
 
 
 

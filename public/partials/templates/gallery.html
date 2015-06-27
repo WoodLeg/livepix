@@ -1,15 +1,6 @@
-<!--
-<md-grid-list md-cols-sm="1" md-cols-md="2" md-cols-gt-md="4" md-row-height="16:9" md-gutter="8px" md-gutter-gt-sm="30px">
-    <md-grid-tile class="pics" ng-repeat="img in gallery"md-colspan="1" md-rowspan="1">
-        <img  ng-src="../thumbs{{ img.gallery_path }}" />
-        <md-grid-tile-footer><a ng-href="#/picture/{{img.id}}"><h3>{{ img.gallery_path }}</h3></a></md-grid-tile-footer>
-    </md-grid-tile>
-    <md-divider></md-divider>
-  </md-grid-list>
-  -->
 
-  <div masonry style="width: 97%; margin: 30px auto;">
-      <div style="margin:1em; border: 10px solid white;" class="masonry-brick" ng-repeat="img in gallery">
-            <a ng-href="#/picture/{{img.id}}"><img  ng-src="{{ img.gallery_path }}" /></a>
-      </div>
-  </div>
+<div preserve-order reload-on-show masonry style="width: 97%; margin: 30px auto;">
+   <div style="margin:1em; border: 10px solid white;" class="masonry-brick" ng-repeat="img in gallery">
+         <img  ng-click="clickPic(img.id)" ng-src="{{ img.gallery_path }}" />
+   </div>
+</div>

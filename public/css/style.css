@@ -9,11 +9,6 @@ body{
 .pics{
     border: 5px solid white;
 }
-
-img{
-    width: 100%;
-    height: 100%;
-}
 a{
     color:white;
     text-decoration: none;
@@ -23,11 +18,13 @@ a:hover {
 }
 md-card{
     color: #3C3C3C;
+    margin:50px auto;
 }
 md-dialog{
     color: #3C3C3C;
 }
 .mainPic {
+   position: relative;
     margin:0;
     padding:0;
 }
@@ -40,9 +37,11 @@ md-dialog{
 p.note {
     font-size: 1.2rem;
 }
+
 .lock-size-row {
-    margin-top: 30px;
-    width: 200px;
+   position:absolute;
+    top:-30px;right:-40px;
+    width: 75px;
     height: 250px;
 }
 .lock-size-row-md{

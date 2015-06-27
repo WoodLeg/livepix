@@ -7,6 +7,7 @@ var chokidar = require('chokidar'); // Allow to watch a folder
 var fs = require('fs');
 var Caman = require('caman').Caman; // Filter module
 var filter = require('./modules/filters');
+var morgan = require('morgan');
 
 // Routes handlers
 var soloPicture = require('./routes/picture');
@@ -17,10 +18,8 @@ var watcher = chokidar.watch('gallery', {ignored: /[\/\\]\./, persistent: true})
 
 // Middlewares
 app.use(express.static(__dirname + '/public'));
-app.use(function(request, response, next){
-   request.rootDir = __dirname;
-   next();
-});
+app.use(morgan('dev'));
+
 
 // Connection of the client
 io.on('connection', function(client) {
