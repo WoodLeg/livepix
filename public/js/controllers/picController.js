@@ -68,7 +68,7 @@ angular.module('livepixApp')
 
       $scope.bubble = {
         isOpen: true,
-        direction: "down",
+        direction: "left",
         mode: "md-fling",
       }
 

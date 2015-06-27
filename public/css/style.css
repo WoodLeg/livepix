@@ -39,19 +39,28 @@ p.note {
 }
 
 .lock-size-row {
+    position:absolute;
+    right: 30px; bottom: -30px;
+}
+
+.md-fab.cyan {
+   background-color: #009688 !important;
+}
+.md-button.md-primary.md-fab:not([disabled]):hover {
+   background-color: #004d40 !important;
+}
+
+.md-mini.blue {
+   background-color: #0091ea !important;
+}
+.md-mini:not([disabled]):hover {
+   background-color: #42bd41 !important;
+}
+
+/**
+.lock-size-row {
    position:absolute;
     top:-30px;right:-40px;
     width: 75px;
     height: 250px;
-}
-.lock-size-row-md{
-    margin-top: 30px;
-    width: 150px;
-    height: 250px;
-}
-.lock-size-col {
-    width; 200px;
-    height: 70px;
-    margin-left: 10px;
-    margin-top: 5px;
-}
+} **/

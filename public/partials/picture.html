@@ -4,18 +4,18 @@
     <md-card>
         <div class="mainPic">
             <img ng-src="{{ activePicture }}" class="md-card-image" alt="image caption">
-            <div class="lock-size-row" bubble layout="row" layout-align-sm="start start" layout-align-gt-sm="center start">
+            <div class="lock-size-row" layout="row" layout-align-sm="start start" layout-align-gt-sm="center start">
                 <md-fab-speed-dial  md-open="bubble.isOpen" md-direction="{{bubble.direction}}" ng-class="bubble.mode">
                     <md-fab-trigger>
-                        <md-button aria-label="menu" class="md-fab md-warn">=
+                        <md-button aria-label="menu" class="md-fab md-primary cyan">=
                         </md-button>
                     </md-fab-trigger>
                     <md-fab-actions>
-                        <md-button aria-label="home" ng-click="home()" class="md-fab md-raised md-mini">#
+                        <md-button aria-label="home" ng-click="home()" class="md-fab md-raised md-mini blue">#
                         </md-button>
-                        <md-button aria-label="print" ng-click="printIt($event)" class="md-fab md-raised md-mini">#
+                        <md-button aria-label="print" ng-click="printIt($event)" class="md-fab md-raised md-mini blue">#
                         </md-button>
-                        <md-button aria-label="mail" ng-click="mailIt($event)" class="md-fab md-raised md-mini">#
+                        <md-button aria-label="mail" ng-click="mailIt($event)" class="md-fab md-raised md-mini blue">#
                         </md-button>
                     <md-fab-actions>
                 </md-fab-speed-dial>
